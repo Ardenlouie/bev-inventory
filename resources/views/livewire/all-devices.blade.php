@@ -58,7 +58,7 @@
 
                 </div>
                     <ul class="list-group">
-                        <form wire:submit.prevent="update">
+                  
                             @foreach($devices as $key => $device)
                             <li class="list-group-item pb-0 mb-1 border border-primary text-center ">
                                 <div class="row ">

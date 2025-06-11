@@ -161,6 +161,7 @@
        <div>
 </div>
             <input type="hidden" name="age" form="add_device" value="{{$age}}"> 
+            <input type="hidden" name="tag_id" form="add_device" value="{{$tag_id}}"> 
                
         </div>
 

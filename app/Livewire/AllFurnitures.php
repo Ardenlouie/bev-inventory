@@ -5,19 +5,18 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-use App\Models\Laptop;
-use App\Models\Device;
+use App\Models\Furniture;
+use App\Models\Item;
 use App\Models\Company;
 
 use Illuminate\Support\Facades\Session;
 
-class AllDevices extends Component
+class AllFurnitures extends Component
 {
-
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $search, $device_id, $item_per_page, $status, $company_id;
+    public $search, $item_id, $item_per_page, $status, $company_id;
     public $page_selected;
     
 
@@ -26,29 +25,31 @@ class AllDevices extends Component
     }
 
     public function updatedSearch() {
-        $this->resetPage('device-page');
+        $this->resetPage('furniture-page');
     }
 
     public function updatedDeviceId() {
-        $this->resetPage('device-page');
+        $this->resetPage('furniture-page');
     }
 
     public function updatedItemPerPage() {
-        $this->resetPage('device-page');
+        $this->resetPage('furniture-page');
     }
 
      public function updatedStatus() {
-        $this->resetPage('device-page');
+        $this->resetPage('furniture-page');
     }
 
     public function mount() {
-        $this->item_per_page = '5';
-    }
 
+        $this->item_per_page = '5';
+
+        
+    }
 
     public function render()
     {
-        $devices = Laptop::where(function ($query) {
+        $furnitures = Furniture::where(function ($query) {
             if (!empty($this->company_id)) { 
                 $query->where('company_id', $this->company_id);
             }
@@ -64,8 +65,8 @@ class AllDevices extends Component
                     });
                 }
 
-                if(!empty($this->device_id)) {
-                    $query->where('device_id', $this->device_id);
+                if(!empty($this->item_id)) {
+                    $query->where('item_id', $this->item_id);
                 }
                 if(!empty($this->status)) {
                     $query->where('status', $this->status);
@@ -75,18 +76,17 @@ class AllDevices extends Component
             });
 
         if($this->item_per_page == 'all') {
-            $devices = $devices->get();
+            $furnitures = $furnitures->get();
         } else {
-            $devices = $devices->paginate($this->item_per_page, ['*'], 'device-page')
+            $furnitures = $furnitures->paginate($this->item_per_page, ['*'], 'furniture-page')
             ->onEachSide(1);
         }
 
-        $variants = Device::orderBy('id', 'asc')->get();
+        $variants = Item::orderBy('id', 'asc')->get();
         $company = Company::orderBy('id', 'asc')->get();
 
-
-        return view('livewire.all-devices')->with([
-            'devices' => $devices,
+        return view('livewire.all-furnitures')->with([
+            'furnitures' => $furnitures,
             'variants' => $variants,
             'company' => $company,
 

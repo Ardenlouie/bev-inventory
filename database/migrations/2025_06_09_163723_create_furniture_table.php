@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('company_id')->nullable();
             $table->string('tag_id')->nullable();
-            $table->foreignId('furniture_id')->nullable();
+            $table->foreignId('item_id')->nullable();
+            $table->string('item_name')->nullable();
             $table->foreignId('employee_id')->nullable();
             $table->foreignId('department_id')->nullable();
             $table->dateTime('date_acquired')->nullable();

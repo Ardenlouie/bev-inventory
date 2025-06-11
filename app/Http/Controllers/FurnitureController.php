@@ -2,33 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Laptop;
-use App\Models\Company;
-use App\Models\Device;
-use App\Models\User;
-use App\Models\Department;
-use Carbon\Carbon;
+use App\Models\Furniture;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserAddRequest;
-use App\Http\Requests\DeviceEditRequest;
-use App\Http\Requests\DeviceAddRequest;
+use App\Http\Requests\FurnitureAddRequest;
+use App\Http\Requests\FurnitureEditRequest;
 use Spatie\Activitylog\Models\Activity;
+use Carbon\Carbon;
+use App\Models\Company;
+use App\Models\Item;
+use App\Models\Department;
+use App\Models\User;
 use Milon\Barcode\DNS2D;
 
-class LaptopController extends Controller
+class FurnitureController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-
-    public function index(Request $request)
+    public function index()
     {
-        $search = trim($request->get('search'));
-        $laptops = Laptop::LaptopSearch($search, 10);
 
-        return view('laptops.index')->with([
-            'laptops' => $laptops,
-            'search' => $search,
+
+        return view('furnitures.index')->with([
+
         ]);
     }
 
@@ -37,8 +33,7 @@ class LaptopController extends Controller
      */
     public function create()
     {
-
-        return view('laptops.create')->with([
+         return view('furnitures.create')->with([
 
         ]);
     }
@@ -46,38 +41,34 @@ class LaptopController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DeviceAddRequest $request)
+    public function store(FurnitureAddRequest $request)
     {
-        $device = new Laptop([
+        $furniture = new Furniture([
             'company_id' => $request->company_id,
             'tag_id' => $request->tag_id,
-            'device_id' => $request->device_id,
-            'model' => $request->model,
-            'serial' => $request->serial,
+            'item_id' => $request->item_id,
+            'item_name' => $request->item_name,
             'employee_id' => $request->employee_id,
             'department_id' => $request->department_id,
             'date_acquired' => $request->date_acquired,
             'age' => $request->age,
             'status' => $request->status,
             'specification' => $request->specification,
-            'os' => $request->os,
-            'office' => $request->office,
             'inclusions' => $request->inclusions,
             'issued_date' => $request->issued_date,
             'note' => $request->note,
-            'previous_owner' => $request->previous_owner,
             'amount' => $request->amount,
         ]);
-        $device->save();
+        $furniture->save();
         
 
         // logs
         activity('created')
-            ->performedOn($device)
-            ->log(':causer.name has created device :subject.name');
+            ->performedOn($furniture)
+            ->log(':causer.name has created furniture :subject.name');
 
-        return redirect()->route('laptops.index')->with([
-            'message_success' => 'Device '.$device->name.' has been successfully created.'
+        return redirect()->route('furnitures.index')->with([
+            'message_success' => 'Furniture '.$furniture->name.' has been successfully created.'
         ]);
     }
 
@@ -86,10 +77,10 @@ class LaptopController extends Controller
      */
     public function show($id)
     {
-        $devices = Laptop::findOrFail($id);
+        $furnitures = Furniture::findOrFail($id);
 
         $now = Carbon::now();
-        $acquiredDate = Carbon::parse($devices->date_acquired);
+        $acquiredDate = Carbon::parse($furnitures->date_acquired);
 
         $years = $acquiredDate->diffInYears($now);
         $months = $acquiredDate->copy()->addYears($years)->diffInMonths($now);
@@ -97,8 +88,8 @@ class LaptopController extends Controller
         // Construct the age string
         $age = "{$years} year" . ($years != 1 ? 's' : '') . " and {$months} month" . ($months != 1 ? 's' : '');
 
-        return view('laptops.show')->with([
-            'devices' => $devices,
+        return view('furnitures.show')->with([
+            'furnitures' => $furnitures,
             'age' => $age,
 
         ]);
@@ -107,13 +98,13 @@ class LaptopController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-     public function edit($id)
+    public function edit($id)
     {
-        $device = Laptop::findOrFail($id);
-        $activities = Activity::where('subject_type', 'App\Models\Laptop')->latest()->take(5)->get();
+        $furniture = Furniture::findOrFail($id);
+        $activities = Activity::where('subject_type', 'App\Models\Furniture')->latest()->take(5)->get();
 
-        $acquiredDate = Carbon::parse($device->date_acquired);
-        $issuedDate = Carbon::parse($device->issued_date);
+        $acquiredDate = Carbon::parse($furniture->date_acquired);
+        $issuedDate = Carbon::parse($furniture->issued_date);
         $now = Carbon::now();
         $years = $acquiredDate->diffInYears($now);
         $months = $acquiredDate->copy()->addYears($years)->diffInMonths($now);
@@ -127,10 +118,10 @@ class LaptopController extends Controller
             $companies_arr[$company->id] = $company->name;
         }
 
-        $devices = Device::all();
-        $devices_arr = [];
-        foreach($devices as $devicess) {
-            $devices_arr[$devicess->id] = $devicess->name;
+        $items = Item::all();
+        $items_arr = [];
+        foreach($items as $item) {
+            $items_arr[$item->id] = $item->name;
         }
 
         $users = User::all();
@@ -151,9 +142,8 @@ class LaptopController extends Controller
             'Available' => 'Available'
         ];
 
-
-        return view('laptops.edit')->with([
-            'device' => $device,
+        return view('furnitures.edit')->with([
+            'furniture' => $furniture,
             'activities' => $activities,
             'acquiredDate' => $acquiredDate,
             'issuedDate' => $issuedDate,
@@ -161,7 +151,7 @@ class LaptopController extends Controller
             'users' => $users_arr,
             'status_arr' => $status_arr,
             'companies' => $companies_arr,
-            'devices' => $devices_arr,
+            'items' => $items_arr,
             'departments' => $departments_arr,
         ]);
     }
@@ -169,48 +159,44 @@ class LaptopController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(DeviceEditRequest $request, $id)
+    public function update(FurnitureEditRequest $request, $id)
     {
-        $device = Laptop::findOrFail($id);
-        $changes_arr['old'] = $device->getOriginal();
+        $furniture = Furniture::findOrFail($id);
+        $changes_arr['old'] = $furniture->getOriginal();
 
-        $device->update([
+        $furniture->update([
             'company_id' => $request->company_id,
-            'device_id' => $request->device_id,
-            'model' => $request->model,
-            'serial' => $request->serial,
+            'item_id' => $request->item_id,
+            'item_name' => $request->item_name,
             'employee_id' => $request->employee_id,
             'department_id' => $request->department_id,
             'date_acquired' => $request->date_acquired,
             'age' => $request->age,
             'status' => $request->status,
             'specification' => $request->specification,
-            'os' => $request->os,
-            'office' => $request->office,
             'inclusions' => $request->inclusions,
             'issued_date' => $request->issued_date,
             'note' => $request->note,
-            'previous_owner' => $request->previous_owner,
             'amount' => $request->amount,
         ]);
         
-        $changes_arr['changes'] = $device->getChanges();
+        $changes_arr['changes'] = $furniture->getChanges();
 
         // logs
         activity('updated')
-            ->performedOn($device)
+            ->performedOn($furniture)
             ->withProperties($changes_arr)
-            ->log(':causer.name has updated device :subject.name');
+            ->log(':causer.name has updated furniture :subject.name');
 
         return back()->with([
-            'message_success' => 'Device '.$device->tag_id.' has been updated successfully.'
+            'message_success' => 'Furniture '.$furniture->tag_id.' has been updated successfully.'
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Laptop $laptop)
+    public function destroy(Furniture $furniture)
     {
         //
     }
@@ -220,7 +206,7 @@ class LaptopController extends Controller
         $dns = new DNS2D();
 
         // Generate the QR code as PNG
-        $qrCodeData = $dns->getBarcodePNG(config('app.url').'/show/detail/'.encrypt($id), 'QRCODE', 50, 50);
+        $qrCodeData = $dns->getBarcodePNG(config('app.url').'/show/furniture/'.encrypt($id), 'QRCODE', 50, 50);
 
         $fileName = 'qrcode-' . time() . '.png';
         $filePath = $fileName;
