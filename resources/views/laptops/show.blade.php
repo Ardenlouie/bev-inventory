@@ -51,7 +51,7 @@ Devices
                     <b>Note</b> <span class="float-right">{{$devices->note}}</span>
                 </li>
                 <li class="list-group-item">
-                    <b>Age</b> <h3 class="float-right">{{$devices->age}}</h3>
+                    <b>Age</b> <h3 class="float-right">{{$age}}</h3>
                 </li>
                 <li class="list-group-item">
                     <b>Previous Owner</b> <span class="float-right">{{$devices->previous_owner}}</span>

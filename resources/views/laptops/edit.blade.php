@@ -63,7 +63,7 @@ Devices
             <div class="col-md-3">
                 <div class="form-group">
                     {!! Form::label('tag_id', 'Tag ID No.') !!}
-                    <h3>{{$device->tag_id}}</h3>
+                    {!! Form::text('tag_id', $device->tag_id, ['class' => 'form-control'.($errors->has('tag_id') ? ' is-invalid' : ''), 'form' => 'update_device']) !!}
                     <p class="text-danger mt-1">{{$errors->first('tag_id')}}</p>
                 </div>
             </div>

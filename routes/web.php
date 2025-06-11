@@ -10,6 +10,7 @@ use App\Http\Controllers\SystemLogController;
 use App\Http\Controllers\LaptopController;
 use App\Http\Controllers\RefreshableController;
 use App\Http\Controllers\ShowDetailController;
+use App\Http\Controllers\FurnitureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::get('/', function () {
 
 });
 Route::get('show/detail/{id}', [ShowDetailController::class, 'index'])->name('details.show');
+Route::get('show/furniture/{id}', [ShowDetailController::class, 'furniture'])->name('furnitures.show');
 
 Auth::routes();
 
@@ -39,7 +41,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'permission:item access'], function() {
         Route::get('laptops', [LaptopController::class, 'index'])->name('laptops.index');
         Route::get('laptops/show/{id}', [LaptopController::class, 'show'])->name('laptops.show');
-        Route::get('downloadQrCode/{id}', [LaptopController::class, 'downloadQrCode'])->name('laptops.downloadQrCode');
+        Route::get('laptops/downloadQrCode/{id}', [LaptopController::class, 'downloadQrCode'])->name('laptops.downloadQrCode');
        
     });
 
@@ -49,6 +51,23 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('laptops/store', [LaptopController::class, 'store'])->name('laptops.store');
         Route::get('laptops/edit/{id}', [LaptopController::class, 'edit'])->name('laptops.edit');
         Route::post('laptops/update/{id}', [LaptopController::class, 'update'])->name('laptops.update');
+       
+    });
+
+    // FURNITURES ROUTES
+    Route::group(['middleware' => 'permission:item access'], function() {
+        Route::get('furnitures', [FurnitureController::class, 'index'])->name('furnitures.index');
+        Route::get('furnitures/show/{id}', [FurnitureController::class, 'show'])->name('furnitures.show');
+        Route::get('furnitures/downloadQrCode/{id}', [FurnitureController::class, 'downloadQrCode'])->name('furnitures.downloadQrCode');
+       
+    });
+
+     // FURNITURES ROUTES
+    Route::group(['middleware' => 'permission:item edit'], function() {
+        Route::get('furnitures/create', [FurnitureController::class, 'create'])->name('furnitures.create');
+        Route::post('furnitures/store', [FurnitureController::class, 'store'])->name('furnitures.store');
+        Route::get('furnitures/edit/{id}', [FurnitureController::class, 'edit'])->name('furnitures.edit');
+        Route::post('furnitures/update/{id}', [FurnitureController::class, 'update'])->name('furnitures.update');
        
     });
 

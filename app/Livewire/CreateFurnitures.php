@@ -3,17 +3,17 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Laptop;
+use App\Models\Furniture;
 use App\Models\Company;
-use App\Models\Device;
+use App\Models\Item;
 use App\Models\User;
 use App\Models\Department;
 use Carbon\Carbon;
 use Milon\Barcode\DNS2D;
 
-class CreateDevices extends Component
+class CreateFurnitures extends Component
 {
-    public $company_id=1, $date_acquired, $device_id=1;
+    public $company_id=1, $date_acquired, $item_id=1, $department_id=1;
     public $tag_id;
 
     public function mount()
@@ -30,10 +30,10 @@ class CreateDevices extends Component
 
         }
 
-        $devices = Device::all();
-        $devices_arr = [];
-        foreach($devices as $devicess) {
-            $devices_arr[$devicess->id] = $devicess->name;
+        $items = Item::all();
+        $items_arr = [];
+        foreach($items as $item) {
+            $items_arr[$item->id] = $item->name;
         }
 
         $users = User::all();
@@ -55,34 +55,42 @@ class CreateDevices extends Component
         $company = Company::where('id', $this->company_id)->first();
 
         $company_name = $company->name;
+
+        $department = Department::where('id', $this->department_id)->first();
+        if($department->id == '1'){
+            $department_name = 'ITD';
+        } elseif($department->id == '2') {
+            $department_name = 'MKT';
+        } elseif($department->id == '3') {
+            $department_name = 'HRD';
+        } elseif($department->id == '4') {
+            $department_name = 'SLS';
+        } elseif($department->id == '5') {
+            $department_name = 'SCM';
+        } elseif($department->id == '6') {
+            $department_name = 'FND';
+        } 
         
-        $device = Device::where('id', $this->device_id)->first();
-        if($device->id == '1'){
-            $device_name = 'L';
-        } elseif($device->id == '2') {
-            $device_name = 'D';
-        } elseif($device->id == '3') {
-            $device_name = 'P';
-        } elseif($device->id == '4') {
-            $device_name = 'AP';
-        } elseif($device->id == '5') {
-            $device_name = 'S';
-        } elseif($device->id == '6') {
-            $device_name = 'PJ';
-        } elseif($device->id == '7') {
-            $device_name = 'SP';
-        } elseif($device->id == '8') {
-            $device_name = 'C';
-        } elseif($device->id == '9') {
-            $device_name = 'U';
-        } elseif($device->id == '10') {
-            $device_name = 'SV';
+        $item = Item::where('id', $this->item_id)->first();
+        if($item->id == '1'){
+            $item_name = 'OT';
+        } elseif($item->id == '2') {
+            $item_name = 'CH';
+        } elseif($item->id == '3') {
+            $item_name = 'CB';
+        } elseif($item->id == '4') {
+            $item_name = 'OR';
+        } elseif($item->id == '5') {
+            $item_name = 'SC';
+        } elseif($item->id == '6') {
+            $item_name = 'DC';
         }
+        
   
   
         $date_code = Carbon::parse($this->date_acquired)->format('mY');
 
-        $currentMonthCount = Laptop::whereYear('created_at', Carbon::now()->year)
+        $currentMonthCount = Furniture::whereYear('created_at', Carbon::now()->year)
             ->whereMonth('created_at', Carbon::now()->month)
             ->count();
         $nextSequence = str_pad($currentMonthCount + 1, 3, '0', STR_PAD_LEFT);
@@ -96,17 +104,16 @@ class CreateDevices extends Component
         // Construct the age string
         $age = "{$years} year" . ($years != 1 ? 's' : '') . " and {$months} month" . ($months != 1 ? 's' : '');
 
-        $this->tag_id = $company_name.'-ITD-'.$date_code.'-'.$nextSequence.$device_name;
+        $this->tag_id = $company_name.'-'.$department_name.'-'.$date_code.'-'.$nextSequence.$item_name;
 
 
-
-        return view('livewire.create-devices')->with([
+        return view('livewire.create-furnitures')->with([
             'users' => $users_arr,
             'age' => $age,
             'status_arr' => $status_arr,
             'status_arr' => $status_arr,
             'companies' => $companies_arr,
-            'devices' => $devices_arr,
+            'items' => $items_arr,
             'departments' => $departments_arr,
         ]);
     }
