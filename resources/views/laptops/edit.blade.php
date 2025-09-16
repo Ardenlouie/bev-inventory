@@ -14,7 +14,7 @@ Devices
         <h1>Devices / Edit</h1>
     </div>
     <div class="col-md-6 text-right">
-        <a href="{{route('laptops.index')}}" class="btn btn-danger"><i class="fas fa-arrow-left mr-1"></i>{{__('Back')}}</a>
+        <a href="{{route('laptops.index', ['device-page' => request('device-page', 1)])}}" class="btn btn-danger"><i class="fas fa-arrow-left mr-1"></i>{{__('Back')}}</a>
     </div>
 </div>
 @endsection

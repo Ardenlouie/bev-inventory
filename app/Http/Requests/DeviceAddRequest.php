@@ -32,15 +32,7 @@ class DeviceAddRequest extends FormRequest
             'serial' => [
                 'required',
             ], 
-            'os' => [
-                'required'
-            ],
-            'office' => [
-                'required'
-            ],
-            'amount' => [
-                'required'
-            ],
+            
         ];
     }
 }

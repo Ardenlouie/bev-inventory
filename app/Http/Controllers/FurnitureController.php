@@ -13,6 +13,8 @@ use App\Models\Item;
 use App\Models\Department;
 use App\Models\User;
 use Milon\Barcode\DNS2D;
+use App\Exports\FurnituresExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FurnitureController extends Controller
 {
@@ -216,5 +218,10 @@ class FurnitureController extends Controller
 
         // Serve it as a downloadable file
         return response()->download($filePath)->deleteFileAfterSend(true);
+    }
+
+    public function export()
+    {
+        return Excel::download(new FurnituresExport, 'furnitures.xlsx');
     }
 }

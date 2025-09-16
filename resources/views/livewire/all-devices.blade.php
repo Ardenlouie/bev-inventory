@@ -40,6 +40,7 @@
                                     <option value="">ALL</option>
                                     <option value="Assigned">Assigned</option>
                                     <option value="Available">Available</option>
+                                    <option value="Defective">Defective</option>
                             </select>
                         </div>
                     </div>
@@ -62,7 +63,7 @@
                             @foreach($devices as $key => $device)
                             <li class="list-group-item pb-0 mb-1 border border-primary text-center ">
                                 <div class="row ">
-                                    <div class="col-lg-2 text-center border-bottom pb-1"> 
+                                    <div class="col-lg-1 text-center border-bottom pb-1"> 
                                         @if($device->company_id == 1)
                                         <img src="{{asset('/vendor/adminlte/dist/img/bevi.jpg')}}" alt="product photo" class="product-img" height="50" width="100">
                                         @elseif($device->company_id == 2)
@@ -86,6 +87,10 @@
                                         <b>SPECIFICATION:</b><br> 
                                         <b>{{$device->specification}}</b><br> 
                                     </div>
+                                    <div class="col-lg-1 text-center border-bottom pb-1">
+                                        <b>SERIAL NO.:</b><br> 
+                                        <b>{{$device->serial}}</b><br> 
+                                    </div>
                                     <div class="col-lg-3 text-center border-bottom pb-1">
                                         <b>
                                             @if($device->status == null)
@@ -94,6 +99,10 @@
                                                 <span class="badge badge-success">Assigned</span>
                                             @elseif($device->status == 'Available')
                                                 <span class="badge badge-warning">Available</span>
+                                            @elseif($device->status == 'Defective')
+                                                <span class="badge badge-danger">Defective</span>
+                                            @elseif($device->status == 'Spare Unit')
+                                                <span class="badge badge-info">Spare Unit</span>
                                             @else
                                             @endif
                                         </b><br> 
@@ -104,12 +113,12 @@
                                     <div class="col-lg-1 text-center border-bottom pb-1">
                                         <b></b><br> 
                                         <b>  
-                                        <a href="{{route('laptops.show', [$device->id])}}" class="btn btn-info btn-xs mb-0 ml-0">
+                                        <a href="{{route('laptops.show', [$device->id, 'device-page' => $devices->currentPage()])}}" class="btn btn-info btn-xs mb-0 ml-0">
                                             <i class="fa fa-list"></i>
                                             VIEW
                                         </a>
                                         @can('item edit')
-                                            <a href="{{route('laptops.edit', [$device->id])}}" class="btn btn-success btn-xs mb-0 ml-0">
+                                            <a href="{{route('laptops.edit', [$device->id, 'device-page' => $devices->currentPage()])}}" class="btn btn-success btn-xs mb-0 ml-0">
                                                 <i class="fa fa-pen-alt"></i>
                                                 EDIT
                                             </a>
@@ -129,6 +138,8 @@
                 @if($item_per_page != 'all')
                 <div class="row">
                     <div class="col-12">
+                        <a href="{{route('export.devices')}}" class="btn btn-success float-right"><i class="fa fa-file-export"></i> Export</a>
+
                         {{$devices->links()}}
                     </div>
                 </div>

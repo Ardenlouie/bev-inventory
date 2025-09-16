@@ -60,6 +60,31 @@
             @enderror
         </div>
 
+        {{-- Company field --}}
+        <!-- <div class="input-group mb-3">
+            <select id="company" name="company" class="form-control @error('company') is-invalid @enderror" autofocus>
+                <option value="" disable>Select Company</option>
+                <option value="1">BEVI</option>
+                <option value="2">BEVA</option>
+                <option value="3">PBB</option>
+                <option value="4">BEVM</option>  
+                <option value="5">OSP</option> 
+            </select>    
+
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-building {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+
+            @error('company')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div> -->
+
         {{-- Login field --}}
         <div class="row">
             <div class="col-7">
