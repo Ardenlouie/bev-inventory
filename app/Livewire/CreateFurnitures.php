@@ -69,6 +69,8 @@ class CreateFurnitures extends Component
             $department_name = 'SCM';
         } elseif($department->id == '6') {
             $department_name = 'FND';
+        } elseif($department->id == '7') {
+            $department_name = 'ECM';
         } 
         
         $item = Item::where('id', $this->item_id)->first();
@@ -84,6 +86,10 @@ class CreateFurnitures extends Component
             $item_name = 'SC';
         } elseif($item->id == '6') {
             $item_name = 'DC';
+        } elseif($item->id == '7') {
+            $item_name = 'TV';
+        } elseif($item->id == '8') {
+            $item_name = 'EC';
         }
         
   

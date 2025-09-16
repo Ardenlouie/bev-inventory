@@ -23,12 +23,15 @@ Devices
 @section('content')
 <div class="col-12">
     <livewire:all-devices />
+
 </div>
 
 
 @endsection
 
 @section('js')
+
+@stack('js')
 
 @endsection
 

@@ -50,7 +50,8 @@ class CreateDevices extends Component
 
         $status_arr = [
             'Assigned' => 'Assigned',
-            'Available' => 'Available'
+            'Available' => 'Available',
+            'Defective' => 'Defective',
         ];
         $company = Company::where('id', $this->company_id)->first();
 
@@ -77,14 +78,17 @@ class CreateDevices extends Component
             $device_name = 'U';
         } elseif($device->id == '10') {
             $device_name = 'SV';
-        }
-  
+        } elseif($device->id == '11') {
+            $device_name = 'TL';
+        } 
+
   
         $date_code = Carbon::parse($this->date_acquired)->format('mY');
 
         $currentMonthCount = Laptop::whereYear('created_at', Carbon::now()->year)
             ->whereMonth('created_at', Carbon::now()->month)
             ->count();
+
         $nextSequence = str_pad($currentMonthCount + 1, 3, '0', STR_PAD_LEFT);
 
         $acquiredDate = Carbon::parse($this->date_acquired);
@@ -95,8 +99,13 @@ class CreateDevices extends Component
 
         // Construct the age string
         $age = "{$years} year" . ($years != 1 ? 's' : '') . " and {$months} month" . ($months != 1 ? 's' : '');
+        
 
         $this->tag_id = $company_name.'-ITD-'.$date_code.'-'.$nextSequence.$device_name;
+
+        $tag_device = explode('-' ,$this->tag_id);
+
+      
 
 
 

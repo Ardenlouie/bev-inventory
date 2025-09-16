@@ -14,6 +14,8 @@ use App\Http\Requests\DeviceEditRequest;
 use App\Http\Requests\DeviceAddRequest;
 use Spatie\Activitylog\Models\Activity;
 use Milon\Barcode\DNS2D;
+use App\Exports\DevicesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaptopController extends Controller
 {
@@ -192,6 +194,7 @@ class LaptopController extends Controller
             'note' => $request->note,
             'previous_owner' => $request->previous_owner,
             'amount' => $request->amount,
+            'tag_id' => $request->tag_id,
         ]);
         
         $changes_arr['changes'] = $device->getChanges();
@@ -230,5 +233,10 @@ class LaptopController extends Controller
 
         // Serve it as a downloadable file
         return response()->download($filePath)->deleteFileAfterSend(true);
+    }
+
+    public function export()
+    {
+        return Excel::download(new DevicesExport, 'devices.xlsx');
     }
 }

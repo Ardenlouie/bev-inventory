@@ -51,6 +51,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('laptops/store', [LaptopController::class, 'store'])->name('laptops.store');
         Route::get('laptops/edit/{id}', [LaptopController::class, 'edit'])->name('laptops.edit');
         Route::post('laptops/update/{id}', [LaptopController::class, 'update'])->name('laptops.update');
+        Route::get('export-devices', [LaptopController::class, 'export'])->name('export.devices');
+
        
     });
 
@@ -59,6 +61,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('furnitures', [FurnitureController::class, 'index'])->name('furnitures.index');
         Route::get('furnitures/show/{id}', [FurnitureController::class, 'show'])->name('furnitures.show');
         Route::get('furnitures/downloadQrCode/{id}', [FurnitureController::class, 'downloadQrCode'])->name('furnitures.downloadQrCode');
+        Route::get('export-furnitures', [FurnitureController::class, 'export'])->name('export.furnitures');
        
     });
 

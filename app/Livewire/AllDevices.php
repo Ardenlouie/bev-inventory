@@ -60,6 +60,7 @@ class AllDevices extends Component
                         $qry->where('model', 'like', '%'.$this->search.'%')
                         ->orWhere('specification', 'like', '%'.$this->search.'%')
                         ->orWhere('tag_id', 'like', '%'.$this->search.'%')
+                        ->orWhere('serial', 'like', '%'.$this->search.'%')
                         ->orWhere('name', 'like', '%'.$this->search.'%');
                     });
                 }
@@ -70,8 +71,9 @@ class AllDevices extends Component
                 if(!empty($this->status)) {
                     $query->where('status', $this->status);
                 }
+        
 
-    
+     
             });
 
         if($this->item_per_page == 'all') {

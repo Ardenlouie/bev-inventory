@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 use App\Models\Company;
+use App\Models\Laptop;
 use Spatie\Permission\Models\Role;
 
 class DeleteModel extends Component
@@ -64,6 +65,11 @@ class DeleteModel extends Component
                 $this->model = Role::findOrFail($model_id);
                 $this->name = $this->model->name;
                 $this->model_route = '/roles';
+            break;
+            case 'Laptop':
+                $this->model = Laptop::findOrFail($model_id);
+                $this->name = $this->model->name;
+                $this->model_route = '/laptops';
             break;
         }
     }
