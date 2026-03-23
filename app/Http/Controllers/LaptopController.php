@@ -15,6 +15,8 @@ use App\Http\Requests\DeviceAddRequest;
 use Spatie\Activitylog\Models\Activity;
 use Milon\Barcode\DNS2D;
 use App\Exports\DevicesExport;
+use App\Imports\LaptopImport;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 class LaptopController extends Controller
@@ -69,6 +71,7 @@ class LaptopController extends Controller
             'note' => $request->note,
             'previous_owner' => $request->previous_owner,
             'amount' => $request->amount,
+            'ds' => $request->ds,
         ]);
         $device->save();
         
@@ -76,7 +79,7 @@ class LaptopController extends Controller
         // logs
         activity('created')
             ->performedOn($device)
-            ->log(':causer.name has created device :subject.name');
+            ->log(':causer.name has created device :subject.tag_id');
 
         return redirect()->route('laptops.index')->with([
             'message_success' => 'Device '.$device->name.' has been successfully created.'
@@ -122,6 +125,7 @@ class LaptopController extends Controller
 
         // Construct the age string
         $age = "{$years} year" . ($years != 1 ? 's' : '') . " and {$months} month" . ($months != 1 ? 's' : '');
+        $ds = $device->ds;
 
         $companies = Company::all();
         $companies_arr = [];
@@ -150,7 +154,12 @@ class LaptopController extends Controller
 
         $status_arr = [
             'Assigned' => 'Assigned',
-            'Available' => 'Available'
+            'Available' => 'Available',
+            'Defective' => 'Defective',
+            'Working' => 'Working',
+            'Spare Unit' => 'Spare Unit',
+            'Auction' => 'Auction',
+            'Sold' => 'Sold',
         ];
 
 
@@ -165,6 +174,7 @@ class LaptopController extends Controller
             'companies' => $companies_arr,
             'devices' => $devices_arr,
             'departments' => $departments_arr,
+            'ds' => $ds,
         ]);
     }
 
@@ -195,6 +205,7 @@ class LaptopController extends Controller
             'previous_owner' => $request->previous_owner,
             'amount' => $request->amount,
             'tag_id' => $request->tag_id,
+            'ds' => $request->ds,
         ]);
         
         $changes_arr['changes'] = $device->getChanges();
@@ -203,7 +214,7 @@ class LaptopController extends Controller
         activity('updated')
             ->performedOn($device)
             ->withProperties($changes_arr)
-            ->log(':causer.name has updated device :subject.name');
+            ->log(':causer.name has updated device :subject.tag_id');
 
         return back()->with([
             'message_success' => 'Device '.$device->tag_id.' has been updated successfully.'
@@ -238,5 +249,31 @@ class LaptopController extends Controller
     public function export()
     {
         return Excel::download(new DevicesExport, 'devices.xlsx');
+    }
+
+    public function import(Request $request) 
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048'
+        ]);
+
+        try {   
+            Excel::import(new LaptopImport, $request->file('file'));
+            return back()->with([
+                'message_success' => 'Devices imported successfully!.'
+            ]);
+        } catch (\Exception $e) {
+            return back()->with([
+                'message_error' => 'Error Uploading!. '. $e->getMessage()
+            ]);
+        }
+    }
+
+    public function create_import()
+    {
+
+        return view('laptops.create-import')->with([
+
+        ]);
     }
 }

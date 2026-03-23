@@ -29,7 +29,7 @@ class SystemLogController extends Controller
             $updates = [];
             foreach($activities as $activity) {
                 if($activity->log_name == 'updated') {
-                    $old = $activity->properties['old'];
+                    $old = $activity->properties['old'] ?? '';
                     $changes = $activity->properties['changes'];
                     
                     // Check if the model exists in the array
@@ -45,7 +45,7 @@ class SystemLogController extends Controller
                             continue;
                         }
             
-                        $old_val = $old[$key];
+                        $old_val = $old[$key] ?? '';
                         $new_val = $update;
             
                         if (isset($models[$key])) {

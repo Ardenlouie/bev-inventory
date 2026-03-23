@@ -7,9 +7,9 @@ use App\Models\User;
 use Illuminate\Support\Collection;
 use Milon\Barcode\DNS2D;
 use Maatwebsite\Excel\Concerns\WithDrawings;
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -149,16 +149,17 @@ class FurnituresExport implements FromCollection, WithDrawings, WithEvents, Shou
 
             $dns = new DNS2D();
 
-            $qrCode = $dns->getBarcodePNG(config('app.url').'/show/furniture/'.encrypt($user->id), 'QRCODE', 50, 50);
+            $qrCode = $dns->getBarcodePNG(config('app.url').'/show/furniture/'.encrypt($user->id), 'QRCODE', 2, 2);
 
-            $fileName = 'qrcode-' . time() . '.png';
-            $filePath = $fileName;
-            file_put_contents($filePath, base64_decode($qrCode));
+            $image = imagecreatefromstring(base64_decode($qrCode));
 
-            $drawing = new Drawing();
+            $drawing = new MemoryDrawing();
+
             $drawing->setName('QR Code');
-            $drawing->setDescription('Device QR Code');
-            $drawing->setPath($filePath);
+            $drawing->setDescription('Furniture QR Code');
+            $drawing->setImageResource($image);
+            $drawing->setRenderingFunction(MemoryDrawing::RENDERING_PNG);
+            $drawing->setMimeType(MemoryDrawing::MIMETYPE_PNG);
 
             $size = 80;
             $drawing->setHeight($size);

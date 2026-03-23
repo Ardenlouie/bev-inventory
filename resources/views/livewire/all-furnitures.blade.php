@@ -130,9 +130,11 @@
             @if($item_per_page != 'all')
             <div class="row">
                 <div class="col-12">
-                    <a href="{{route('export.furnitures')}}" class="btn btn-success float-right"><i class="fa fa-file-export"></i> Export</a>
 
                     {{$furnitures->links()}}
+
+                    <a href="{{route('export.furnitures')}}" class="btn btn-success float-right"><i class="fa fa-file-export"></i> Export</a>
+
                 </div>
             </div>
             @endif

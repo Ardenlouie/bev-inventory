@@ -52,37 +52,17 @@ class CreateDevices extends Component
             'Assigned' => 'Assigned',
             'Available' => 'Available',
             'Defective' => 'Defective',
+            'Working' => 'Working',
+            'Spare Unit' => 'Spare Unit',
         ];
         $company = Company::where('id', $this->company_id)->first();
 
         $company_name = $company->name;
         
         $device = Device::where('id', $this->device_id)->first();
-        if($device->id == '1'){
-            $device_name = 'L';
-        } elseif($device->id == '2') {
-            $device_name = 'D';
-        } elseif($device->id == '3') {
-            $device_name = 'P';
-        } elseif($device->id == '4') {
-            $device_name = 'AP';
-        } elseif($device->id == '5') {
-            $device_name = 'S';
-        } elseif($device->id == '6') {
-            $device_name = 'PJ';
-        } elseif($device->id == '7') {
-            $device_name = 'SP';
-        } elseif($device->id == '8') {
-            $device_name = 'C';
-        } elseif($device->id == '9') {
-            $device_name = 'U';
-        } elseif($device->id == '10') {
-            $device_name = 'SV';
-        } elseif($device->id == '11') {
-            $device_name = 'TL';
-        } 
 
-  
+        $device_name = $device->prefix;
+    
         $date_code = Carbon::parse($this->date_acquired)->format('mY');
 
         $currentMonthCount = Laptop::whereYear('created_at', Carbon::now()->year)
@@ -104,10 +84,6 @@ class CreateDevices extends Component
         $this->tag_id = $company_name.'-ITD-'.$date_code.'-'.$nextSequence.$device_name;
 
         $tag_device = explode('-' ,$this->tag_id);
-
-      
-
-
 
         return view('livewire.create-devices')->with([
             'users' => $users_arr,

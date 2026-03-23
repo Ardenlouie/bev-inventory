@@ -11,6 +11,8 @@ use App\Http\Controllers\LaptopController;
 use App\Http\Controllers\RefreshableController;
 use App\Http\Controllers\ShowDetailController;
 use App\Http\Controllers\FurnitureController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DeviceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +55,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('laptops/update/{id}', [LaptopController::class, 'update'])->name('laptops.update');
         Route::get('export-devices', [LaptopController::class, 'export'])->name('export.devices');
 
+        Route::post('laptops-import', [LaptopController::class, 'import'])->name('laptops.import');
+        Route::get('laptops/import', [LaptopController::class, 'create_import'])->name('device.import');
+
        
     });
 
@@ -92,6 +97,30 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::get('company/{id}/edit', [CompanyController::class, 'edit'])->name('company.edit')->middleware('permission:company edit');
         Route::post('company/{id}', [CompanyController::class, 'update'])->name('conpany.update')->middleware('permission:company edit');
+    });
+
+    // DEPARTMENTS ROUTES
+    Route::group(['middleware' => 'permission:company access'], function() {
+        Route::get('departments', [DepartmentController::class, 'index'])->name('department.index');
+        Route::get('department/create', [DepartmentController::class, 'create'])->name('department.create')->middleware('permission:company create');
+        Route::post('department', [DepartmentController::class, 'store'])->name('department.store')->middleware('permission:company create');
+
+        Route::get('department/{id}', [DepartmentController::class, 'show'])->name('department.show');
+
+        Route::get('department/{id}/edit', [DepartmentController::class, 'edit'])->name('department.edit')->middleware('permission:company edit');
+        Route::post('department/{id}', [DepartmentController::class, 'update'])->name('department.update')->middleware('permission:company edit');
+    });
+
+    // DEVICES ROUTES
+    Route::group(['middleware' => 'permission:company access'], function() {
+        Route::get('devices', [DeviceController::class, 'index'])->name('device.index');
+        Route::get('device/create', [DeviceController::class, 'create'])->name('device.create')->middleware('permission:company create');
+        Route::post('device', [DeviceController::class, 'store'])->name('device.store')->middleware('permission:company create');
+
+        Route::get('device/{id}', [DeviceController::class, 'show'])->name('device.show');
+
+        Route::get('device/{id}/edit', [DeviceController::class, 'edit'])->name('device.edit')->middleware('permission:company edit');
+        Route::post('device/{id}', [DeviceController::class, 'update'])->name('device.update')->middleware('permission:company edit');
     });
 
     // ROLES ROUTES
