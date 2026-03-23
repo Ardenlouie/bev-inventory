@@ -4,13 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Laptop extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
+    public function getConnectionName()
+    {
+        return Session::get('db_connection', 'mysql'); // Default to 'mysql' if not set
+    }
 
     protected $fillable = [
         'company_id',
@@ -31,6 +37,7 @@ class Laptop extends Model
         'note',
         'previous_owner',
         'amount',
+        'ds',
     ];
 
     public function employee() {

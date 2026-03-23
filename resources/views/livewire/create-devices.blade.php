@@ -36,6 +36,13 @@
                     <p class="text-danger mt-1">{{$errors->first('issued_date')}}</p>
                 </div>
             </div>
+             <div class="col-md-1">
+                <div class="form-group">
+                    {!! Form::label('ds', 'DS') !!}
+                    {!! Form::number('ds', '', ['class' => 'form-control'.($errors->has('ds') ? ' is-invalid' : ''), 'form' => 'add_device']) !!}
+                    <p class="text-danger mt-1">{{$errors->first('ds')}}</p>
+                </div>
+            </div>
             <div class="col-md-1">
                 <div class="form-group">
                     <div class="col-lg-2 col-md-6 col-sm-12" wire:loading><i class="spinner-border"></i></div>

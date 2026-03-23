@@ -343,6 +343,20 @@ return [
                     'active'    => ['companies', 'company*']
                 ],
                 [
+                    'text'      => 'Departments',
+                    'url'       => 'departments',
+                    'icon'      => 'fas fa-fw fa-layer-group',
+                    'can'       => 'company access',
+                    'active'    => ['departments', 'department*']
+                ],
+                [
+                    'text'      => 'Devices',
+                    'url'       => 'devices',
+                    'icon'      => 'fas fa-fw fa-phone',
+                    'can'       => 'company access',
+                    'active'    => ['devices', 'device*']
+                ],
+                [
                     'text'      => 'Users',
                     'url'       => 'users',
                     'icon'      => 'fas fa-fw fa-users',

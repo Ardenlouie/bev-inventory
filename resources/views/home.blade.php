@@ -152,6 +152,58 @@ BEV INVENTORY
     <!-- /.info-box -->
     </div>
     <!-- /.col -->
+     <div class="col-12 col-sm-6 col-md-3">
+    <div class="info-box mb-3 bg-gradient-purple">
+        <span class="info-box-icon bg-gradient-purple elevation-1"><i class="fas fa-tools"></i></span>
+
+        <div class="info-box-content">
+        <span class="info-box-text">Tools</span>
+        <span class="info-box-number">{{$tools}}</span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+     <div class="col-12 col-sm-6 col-md-3">
+    <div class="info-box mb-3 bg-gradient-lime">
+        <span class="info-box-icon bg-gradient-lime elevation-1"><i class="fas fa-phone"></i></span>
+
+        <div class="info-box-content">
+        <span class="info-box-text">Telephones</span>
+        <span class="info-box-number">{{$telephone}}</span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+     <div class="col-12 col-sm-6 col-md-3">
+    <div class="info-box mb-3 bg-gradient-maroon">
+        <span class="info-box-icon bg-gradient-maroon elevation-1"><i class="fas fa-fingerprint"></i></span>
+
+        <div class="info-box-content">
+        <span class="info-box-text">Biometrics</span>
+        <span class="info-box-number">{{$biometrics}}</span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+     <div class="col-12 col-sm-6 col-md-3">
+    <div class="info-box mb-3 bg-gradient-teal">
+        <span class="info-box-icon bg-gradient-teal elevation-1"><i class="fas fa-box"></i></span>
+
+        <div class="info-box-content">
+        <span class="info-box-text">External Drive</span>
+        <span class="info-box-number">{{$external}}</span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
 </div>
 
 

@@ -61,14 +61,10 @@
         </div>
 
         {{-- Company field --}}
-        <!-- <div class="input-group mb-3">
-            <select id="company" name="company" class="form-control @error('company') is-invalid @enderror" autofocus>
-                <option value="" disable>Select Company</option>
-                <option value="1">BEVI</option>
-                <option value="2">BEVA</option>
-                <option value="3">PBB</option>
-                <option value="4">BEVM</option>  
-                <option value="5">OSP</option> 
+        <div class="input-group mb-3">
+            <select name="type" class="form-control @error('type') is-invalid @enderror">
+                <option value="makati" selected>MAKATI</option>
+                <option value="sanpablo">SAN PABLO</option>
             </select>    
 
 
@@ -83,7 +79,9 @@
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
-        </div> -->
+        </div>
+
+        
 
         {{-- Login field --}}
         <div class="row">

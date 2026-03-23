@@ -75,6 +75,7 @@ class AllDevices extends Component
 
      
             });
+            
 
         if($this->item_per_page == 'all') {
             $devices = $devices->get();

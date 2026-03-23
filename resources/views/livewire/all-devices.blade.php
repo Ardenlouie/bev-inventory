@@ -41,6 +41,10 @@
                                     <option value="Assigned">Assigned</option>
                                     <option value="Available">Available</option>
                                     <option value="Defective">Defective</option>
+                                    <option value="Spare Unit">Spare Unit</option>
+                                    <option value="Working">Working</option>
+                                    <option value="Auction">Auction</option>
+                                    <option value="Sold">Sold</option>
                             </select>
                         </div>
                     </div>
@@ -103,7 +107,16 @@
                                                 <span class="badge badge-danger">Defective</span>
                                             @elseif($device->status == 'Spare Unit')
                                                 <span class="badge badge-info">Spare Unit</span>
+                                            @elseif($device->status == 'Working')
+                                                <span class="badge badge-primary">Working</span>
+                                            @elseif($device->status == 'Auction')
+                                                <span class="badge bg-purple">Auction</span>
+                                            @elseif($device->status == 'Lost Phone')
+                                                <span class="badge bg-danger">Lost Phone</span>
+                                            @elseif($device->status == 'Sold')
+                                                <span class="badge bg-orange">Sold</span>
                                             @else
+                                            
                                             @endif
                                         </b><br> 
                                         <b>{{$device->employee->name}}</b><br> 
@@ -138,9 +151,11 @@
                 @if($item_per_page != 'all')
                 <div class="row">
                     <div class="col-12">
-                        <a href="{{route('export.devices')}}" class="btn btn-success float-right"><i class="fa fa-file-export"></i> Export</a>
 
                         {{$devices->links()}}
+
+                        <a href="{{route('export.devices')}}" class="btn btn-success float-right"><i class="fa fa-file-export"></i> Export</a>
+
                     </div>
                 </div>
                 @endif

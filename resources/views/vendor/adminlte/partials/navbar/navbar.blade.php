@@ -14,6 +14,12 @@
 
         {{-- Custom left links --}}
         @yield('content_top_nav_left')
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <strong>{{session('db_connection') == 'mysql' ? 'MAKATI' : 'SAN PABLO'}} DB</strong>
+            </a>
+        </li>
     </ul>
 
     {{-- Navbar right links --}}
