@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -64,7 +64,7 @@ return [
     */
 
     'logo' => 'BEV INVENTORY',
-    'logo_img' => 'vendor/adminlte/dist/img/bevinventory-logo.png',
+    'logo_img' => 'vendor/adminlte/dist/img/bevinventorylogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => 'vendor/adminlte/dist/img/bevinventory.png',
     'logo_img_xl_class' => 'brand-image-xl',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/bevinventory-logo.png',
+            'path' => 'vendor/adminlte/dist/img/bevinventorylogo.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 300,
@@ -113,7 +113,7 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/bevinventory-logo.png',
+            'path' => 'vendor/adminlte/dist/img/bevinventorylogo.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 300,
@@ -134,7 +134,7 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => false,
+    'usermenu_header' => true,
     'usermenu_header_class' => 'bg-yellow',
     'usermenu_image' => false,
     'usermenu_desc' => false,
@@ -215,12 +215,12 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
-    'sidebar_collapse_auto_size' => false,
-    'sidebar_collapse_remember' => false,
+    'sidebar_collapse' => true,
+    'sidebar_collapse_auto_size' => true,
+    'sidebar_collapse_remember' => true,
     'sidebar_collapse_remember_no_transition' => true,
     'sidebar_scrollbar_theme' => 'os-theme-light',
-    'sidebar_scrollbar_auto_hide' => 'l',
+    'sidebar_scrollbar_auto_hide' => false,
     'sidebar_nav_accordion' => true,
     'sidebar_nav_animation_speed' => 300,
 

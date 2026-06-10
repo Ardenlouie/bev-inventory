@@ -67,6 +67,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('furnitures/show/{id}', [FurnitureController::class, 'show'])->name('furnitures.show');
         Route::get('furnitures/downloadQrCode/{id}', [FurnitureController::class, 'downloadQrCode'])->name('furnitures.downloadQrCode');
         Route::get('export-furnitures', [FurnitureController::class, 'export'])->name('export.furnitures');
+
+        Route::post('furnitures-import', [FurnitureController::class, 'import'])->name('furnitures.import');
+        Route::get('furnitures/import', [FurnitureController::class, 'create_import'])->name('item.import');
        
     });
 

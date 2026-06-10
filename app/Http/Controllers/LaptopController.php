@@ -6,6 +6,7 @@ use App\Models\Laptop;
 use App\Models\Company;
 use App\Models\Device;
 use App\Models\User;
+use App\Models\ShowAll;
 use App\Models\Department;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -74,6 +75,29 @@ class LaptopController extends Controller
             'ds' => $request->ds,
         ]);
         $device->save();
+
+        // $show_all = new ShowAll([
+        //     'company_id' => $request->company_id,
+        //     'tag_id' => $request->tag_id,
+        //     'device_id' => $request->device_id,
+        //     'model' => $request->model,
+        //     'serial' => $request->serial,
+        //     'employee_id' => $request->employee_id,
+        //     'department_id' => $request->department_id,
+        //     'date_acquired' => $request->date_acquired,
+        //     'age' => $request->age,
+        //     'status' => $request->status,
+        //     'specification' => $request->specification,
+        //     'os' => $request->os,
+        //     'office' => $request->office,
+        //     'inclusions' => $request->inclusions,
+        //     'issued_date' => $request->issued_date,
+        //     'note' => $request->note,
+        //     'previous_owner' => $request->previous_owner,
+        //     'amount' => $request->amount,
+        //     'ds' => $request->ds,
+        // ]);
+        // $show_all->save();
         
 
         // logs
@@ -184,6 +208,7 @@ class LaptopController extends Controller
     public function update(DeviceEditRequest $request, $id)
     {
         $device = Laptop::findOrFail($id);
+        $show_all = ShowAll::findOrFail($id);
         $changes_arr['old'] = $device->getOriginal();
 
         $device->update([
@@ -206,7 +231,30 @@ class LaptopController extends Controller
             'amount' => $request->amount,
             'tag_id' => $request->tag_id,
             'ds' => $request->ds,
+            'take_home' => $request->take_home,
         ]);
+
+        // $show_all->update([
+        //     'company_id' => $request->company_id,
+        //     'device_id' => $request->device_id,
+        //     'model' => $request->model,
+        //     'serial' => $request->serial,
+        //     'employee_id' => $request->employee_id,
+        //     'department_id' => $request->department_id,
+        //     'date_acquired' => $request->date_acquired,
+        //     'age' => $request->age,
+        //     'status' => $request->status,
+        //     'specification' => $request->specification,
+        //     'os' => $request->os,
+        //     'office' => $request->office,
+        //     'inclusions' => $request->inclusions,
+        //     'issued_date' => $request->issued_date,
+        //     'note' => $request->note,
+        //     'previous_owner' => $request->previous_owner,
+        //     'amount' => $request->amount,
+        //     'tag_id' => $request->tag_id,
+        //     'ds' => $request->ds,
+        // ]);
         
         $changes_arr['changes'] = $device->getChanges();
 
@@ -259,6 +307,10 @@ class LaptopController extends Controller
 
         try {   
             Excel::import(new LaptopImport, $request->file('file'));
+
+            activity('uploaded')
+                ->log(':causer.name has uploaded devices');
+
             return back()->with([
                 'message_success' => 'Devices imported successfully!.'
             ]);

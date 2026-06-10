@@ -14,6 +14,7 @@ use App\Models\Department;
 use App\Models\User;
 use Milon\Barcode\DNS2D;
 use App\Exports\FurnituresExport;
+use App\Imports\FurnitureImports;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FurnitureController extends Controller
@@ -223,5 +224,35 @@ class FurnitureController extends Controller
     public function export()
     {
         return Excel::download(new FurnituresExport, 'furnitures.xlsx');
+    }
+
+    public function import(Request $request) 
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048'
+        ]);
+
+        try {   
+            Excel::import(new FurnitureImports, $request->file('file'));
+
+            activity('uploaded')
+                ->log(':causer.name has uploaded furnitures');
+
+            return back()->with([
+                'message_success' => 'Furnitures imported successfully!.'
+            ]);
+        } catch (\Exception $e) {
+            return back()->with([
+                'message_error' => 'Error Uploading!. '. $e->getMessage()
+            ]);
+        }
+    }
+
+    public function create_import()
+    {
+
+        return view('furnitures.create-import')->with([
+
+        ]);
     }
 }

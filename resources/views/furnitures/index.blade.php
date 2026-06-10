@@ -14,6 +14,7 @@ Furnitures
     </div>
     @can('item edit')
     <div class="col-md-6 text-right">
+        <a href="{{route('item.import')}}" class="btn bg-navy"><i class="fas fa-upload mr-1"></i>Bulk Upload</a>
         <a href="{{route('furnitures.create')}}" class="btn btn-primary"><i class="fas fa-plus mr-1"></i>Add Furniture</a>
     </div>
     @endcan

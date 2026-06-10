@@ -137,10 +137,10 @@
                                             </a>
                                         @endcan
                                         @can('item delete')
-                                            <!-- <a href="#" class="btn btn-danger btn-xs mb-0 ml-0 btn-delete" data-id="">
+                                            <a href="#" class="btn btn-danger btn-xs mb-0 ml-0 btn-delete" data-id="{{encrypt($device->id)}}">
                                                 <i class="fa fa-trash-alt"></i>
                                                 DELETE
-                                            </a> -->
+                                            </a>
                                         @endcan
                                          </b><br> 
                                     </div>

@@ -76,11 +76,11 @@
                                 </div>
                                 <div class="col-lg-1 text-center border-bottom pb-1">
                                     <b></b><br> 
-                                    <b>{{$furniture->item->name}}</b><br> 
+                                    <b>{{$furniture->item->name ?? ''}}</b><br> 
                                 </div>
                                 <div class="col-lg-2 text-center border-bottom pb-1">
                                     <b>ITEM NAME:</b><br> 
-                                    <b>{{$furniture->item_name}}</b><br> 
+                                    <b>{{$furniture->item_name ?? ''}}</b><br> 
                                 </div>
                             
                                 <div class="col-lg-3 text-center border-bottom pb-1">

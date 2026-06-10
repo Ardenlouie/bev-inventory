@@ -39,10 +39,10 @@
                             <tbody class="text-center">
                                 @foreach($activities as $activity)
                                     <tr>
-                                        <td>{{$activity->log_name}}</td>
-                                        <td>{{$activity->description}}</td>
+                                        <td>{{$activity->log_name ?? ''}}</td>
+                                        <td>{{$activity->description ?? ''}}</td>
                                         <td>
-                                            {{$activity->causer->name}}
+                                            {{$activity->causer->name ?? ''}}
                                         </td>
                                         <td class="p-1 text-xs">
                                             @if($activity->log_name == 'updated' && !empty($updates[$activity->id]))
@@ -58,7 +58,7 @@
                                                 </ul>
                                             @endif
                                         </td>
-                                        <td>{{date('F j, Y H:i:s a', strtotime($activity->created_at))}}</td>
+                                        <td>{{date('F j, Y H:i:s a', strtotime($activity->created_at)) ?? ''}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

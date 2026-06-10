@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 use App\Models\Laptop;
+use App\Models\ShowAll;
 use App\Models\Device;
 use App\Models\Company;
 
@@ -75,7 +76,6 @@ class AllDevices extends Component
 
      
             });
-            
 
         if($this->item_per_page == 'all') {
             $devices = $devices->get();
@@ -83,6 +83,7 @@ class AllDevices extends Component
             $devices = $devices->paginate($this->item_per_page, ['*'], 'device-page')
             ->onEachSide(1);
         }
+
 
         $variants = Device::orderBy('id', 'asc')->get();
         $company = Company::orderBy('id', 'asc')->get();
@@ -92,6 +93,7 @@ class AllDevices extends Component
             'devices' => $devices,
             'variants' => $variants,
             'company' => $company,
+
 
         ]);
     }

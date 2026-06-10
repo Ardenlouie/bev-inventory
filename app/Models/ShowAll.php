@@ -7,16 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
-class Laptop extends Model
+class ShowAll extends Model
 {
     use HasFactory;
     use SoftDeletes;
-
-    public function getConnectionName()
-    {
-        return Session::get('db_connection', 'mysql'); // Default to 'mysql' if not set
-    }
 
     protected $fillable = [
         'company_id',
@@ -39,6 +33,7 @@ class Laptop extends Model
         'amount',
         'ds',
         'take_home',
+
     ];
 
     public function employee() {
@@ -55,22 +50,6 @@ class Laptop extends Model
 
     public function department() {
         return $this->belongsTo('App\Models\Department');
-    }
-
-    public function scopeLaptopSearch($query, $search, $limit) {
-        if($search != '') {
-            $laptops = $query->orderBy('id', 'DESC')
-            ->where('company_id', 'like', '%'.$search.'%')
-            ->orWhere('model', 'like', '%'.$search.'%')
-            ->orWhere('specification', 'like', '%'.$search.'%')
-            ->orWhere('status', 'like', '%'.$search.'%')
-            ->paginate($limit)->onEachSide(1)->appends(request()->query());
-        } else {
-            $laptops = $query->orderBy('id', 'DESC')
-            ->paginate($limit)->onEachSide(1)->appends(request()->query());
-        }
-
-        return $laptops;
     }
 
 }

@@ -44,7 +44,7 @@ class UserEditRequest extends FormRequest
             ],
             'email' => [
                 'required',
-                Rule::unique((new User)->getTable())->ignore(decrypt($this->id))
+                // Rule::unique((new User)->getTable())->ignore(decrypt($this->id))
             ],
             'role_ids' => [
                 'required'

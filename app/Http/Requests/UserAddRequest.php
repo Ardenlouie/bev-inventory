@@ -44,7 +44,7 @@ class UserAddRequest extends FormRequest
             ],
             'email' => [
                 'required',
-                Rule::unique((new User)->getTable())
+                // Rule::unique((new User)->getTable())
             ], 
             'role_ids' => [
                 'required'

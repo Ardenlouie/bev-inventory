@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ShowAll;
 use App\Models\Laptop;
 use App\Models\Furniture;
 use App\Models\Company;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class ShowDetailController extends Controller
 {
 
     public function index($id)
     {
+        $db = Session::get('db_connection', 'mysql');
         $devices = Laptop::findOrFail(decrypt($id));
 
         $now = Carbon::now();
@@ -33,7 +36,9 @@ class ShowDetailController extends Controller
 
     public function furniture($id)
     {
-        $furnitures = Furniture::findOrFail(decrypt($id));
+        $db = Session::get('db_connection', 'mysql');
+
+        $furnitures = Furniture::on($db)->findOrFail(decrypt($id));
 
         $now = Carbon::now();
         $acquiredDate = Carbon::parse($furnitures->date_acquired);

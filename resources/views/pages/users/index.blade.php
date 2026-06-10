@@ -25,6 +25,16 @@
         </div>
         <div class="card-body">
             
+            {{ html()->form('GET', route('user.index'))->open() }}
+                <div class="row mb-1">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            {{ html()->label(__('Search'), 'search')->class('mb-0') }}
+                            {{ html()->input('text', 'search', $search)->placeholder(__('Search'))->class(['form-control', 'form-control-sm'])}}
+                        </div>
+                    </div>
+                </div>
+            {{ html()->form()->close() }}
             <div class="row">
                 <div class="col-12 table-responsive p-1 bg-gray rounded">
                     <table class="table table-sm table-striped table-hover bg-white mb-0">
