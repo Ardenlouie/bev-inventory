@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('title')
-Devices
+Furnitures
 @endsection
 
 @section('css')
@@ -10,7 +10,7 @@ Devices
 @section('content_header')
 <div class="row">
     <div class="col-md-6">
-        <h1>Devices</h1>
+        <h1>Furnitures</h1>
     </div>
 
 </div>
@@ -22,14 +22,14 @@ Devices
     <div class="card-header">
         <h3 class="card-title"><i class="fas fa-file-upload"></i> Bulk Upload Laptops</h3>
         <div class="card-tools">
-            <a href="{{asset('vendor/adminlte/dist/For Upload (Bev Inventory).xlsx')}}" class="btn btn-success btn-sm">
+            <a href="{{asset('vendor/adminlte/dist/For Upload (Bev Inventory) - Furnitures.xlsx')}}" class="btn btn-success btn-sm">
                 <i class="fa fa-download mr-1"></i>
                 DOWNLOAD TEMPLATE
             </a>
         </div>
     </div>
     <div class="card-body">
-        <form action="{{ route('laptops.import') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('furnitures.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="file">Choose Excel/CSV File</label>

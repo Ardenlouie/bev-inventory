@@ -31,6 +31,16 @@
                 <li class="list-group-item">
                     <b>Previous Owner</b> <span class="float-right">{{$devices->previous_owner}}</span>
                 </li>
+                <li class="list-group-item">
+                    <b>Allowed to Take Home</b> <h3>
+                        @if($devices->take_home)
+                            <span class="float-right badge badge-success">YES</span>
+                        @else
+                            <span class="float-right badge badge-danger">NO</span>
+                        @endif
+                    </h3>
+                </li>
+
             </ul>
         </div>
     </div>

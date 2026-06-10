@@ -55,8 +55,12 @@
 {{-- Setup Custom Preloader Content --}}
 
 @section('preloader')
-    <i class="fas fa-4x fa-spin fa-spinner text-secondary"></i>
-    <h4 class="mt-4 text-dark">Loading</h4>
+    <img src="{{ asset(config('adminlte.preloader.img.path', 'vendor/adminlte/dist/img/bevinventorylogo.png')) }}"
+             class="img-circle {{ config('adminlte.preloader.img.effect', 'animation__shake') }}"
+             alt="{{ config('adminlte.preloader.img.alt', 'AdminLTE Preloader Image') }}"
+             width="{{ config('adminlte.preloader.img.width', 60) }}"
+             height="{{ config('adminlte.preloader.img.height', 60) }}"
+             style="animation-iteration-count:infinite;">
 @stop
 
 {{-- Add common Javascript/Jquery code --}}

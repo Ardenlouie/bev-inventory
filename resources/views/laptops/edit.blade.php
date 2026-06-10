@@ -166,6 +166,35 @@ Devices
                     <p class="text-danger mt-1">{{$errors->first('status')}}</p>
                 </div>
             </div>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    {{ html()->label(__('Allowed to Take Home'), 'take_home')->class(['mb-2 d-block font-weight-bold']) }}
+
+                    <div class="custom-control custom-switch custom-switch-purple">
+                        <input type="hidden" name="confidential" value="0">
+                        
+                        <input 
+                            form="update_device"
+                            type="checkbox" 
+                            name="take_home" 
+                            class="custom-control-input {{ $errors->has('take_home') ? 'is-invalid' : '' }}" 
+                            id="takehomeSwitch" 
+                            value="1"
+                            {{ old('take_home', $device->take_home) == 1 ? 'checked' : '' }}
+                        >
+                        
+                        <label class="custom-control-label" for="takehomeSwitch">
+                            <span id="switch-text">
+                                {{ old('take_home', $device->take_home) == 1 ? __('(Yes)') : __('(No)') }}
+                            </span>
+                        </label>
+                    </div>
+
+                    @if($errors->has('confidential'))
+                        <small class="text-danger d-block mt-2">{{ $errors->first('confidential') }}</small>
+                    @endif
+                </div>
+            </div>
               <div class="col-md-3">
                 <div class="form-group">
                     {!! Form::label('age', 'Age') !!}
@@ -183,23 +212,66 @@ Devices
 
 @endsection
 
-@section('js')
+@section('footer')
+@endsection
+
+{{-- Push extra CSS --}}
+@push('css')
+    {{-- Add here extra stylesheets --}}
+    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
+
+<style>
+    /* Change the 'On' color to Purple */
+    .custom-switch-purple .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: #6f42c1; /* Purple */
+        border-color: #6439ac;
+    }
+
+    /* Optional: Make the switch larger for better UX */
+    .custom-switch {
+        padding-left: 2.5rem;
+    }
+
+    .custom-switch .custom-control-label::before {
+        left: -2.25rem;
+        width: 2rem;
+        pointer-events: all;
+        border-radius: 0.5rem;
+    }
+
+    .custom-switch .custom-control-label::after {
+        top: calc(0.25rem + 2px);
+        left: calc(-2.25rem + 2px);
+        width: calc(1rem - 4px);
+        height: calc(1rem - 4px);
+        background-color: #adb5bd;
+        border-radius: 0.5rem;
+    }
+
+    .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #fff;
+        transform: translateX(1rem);
+    }
+</style>
+
+@endpush
+
+{{-- Push extra scripts --}}
+@push('js')
+
 <script>
     $(document).ready(function() {
-        $('.select2').select2({
-
+        $('#takehomeSwitch').on('change', function() {
+            if ($(this).is(':checked')) {
+                $('#switch-text').text('(Yes)');
+            } else {
+                $('#switch-text').text('(No)');
+            }
         });
     });
 </script>
 
-
-
-
-
-@endsection
-
-@section('footer')
-@endsection
+@endpush
 
 @section('right-sidebar')
 sidebar

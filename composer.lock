@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41ab66c3545531ca3271e883bf6a0236",
+    "content-hash": "956c25a083947cf5c4181f2cecdc75f6",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -102,6 +102,51 @@
                 "source": "https://github.com/Bacon/BaconQrCode/tree/2.0.8"
             },
             "time": "2022-12-07T17:46:57+00:00"
+        },
+        {
+            "name": "bevi-webdev-jm/hub-auth-client",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "../hub-auth-client",
+                "reference": "b346e13739859bcf98bc04ea8239c88f7befd3e0"
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0",
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "laravel/socialite": "^5.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
+                "phpunit/phpunit": "^9.0|^10.0|^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BeviWebdevJm\\HubAuthClient\\HubAuthServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BeviWebdevJm\\HubAuthClient\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "BeviWebdevJm\\HubAuthClient\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "SSO client package for connecting Laravel apps to the centralized Hub via OAuth2",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "brick/math",
@@ -10327,12 +10372,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }

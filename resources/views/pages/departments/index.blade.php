@@ -85,7 +85,7 @@
             $('body').on('click', '.btn-delete', function(e) {
                 e.preventDefault();
                 var id = $(this).data('id');
-                Livewire.dispatch('setDeleteModel', {type: 'Company', model_id: id});
+                Livewire.dispatch('setDeleteModel', {type: 'Department', model_id: id});
                 $('#modal-delete').modal('show');
             });
         });

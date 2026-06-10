@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 
 @section('title')
 Devices
@@ -21,7 +21,7 @@ Devices
 </div>
 @endsection
 
-@section('content')
+@section('content_body')
 <div class="col-12">
     <livewire:all-devices />
 
@@ -30,11 +30,18 @@ Devices
 
 @endsection
 
-@section('js')
-
-@stack('js')
-
-@endsection
+@push('js')
+<script>
+    $(function() {
+        $('body').on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            Livewire.dispatch('setDeleteModel', {type: 'Laptop', model_id: id});
+            $('#modal-delete').modal('show');
+        });
+    });
+</script>
+@endpush
 
 @section('footer')
 @endsection
